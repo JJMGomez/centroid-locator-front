@@ -71,13 +71,13 @@ export default function RootLayout({
               </ListItemButton>
             </Link>
           </ListItem>
-          <ListItem key='Posts' disablePadding>
-            <Link href='/posts'>
+          <ListItem key='Data' disablePadding>
+            <Link href='/data'>
               <ListItemButton>
                 <ListItemIcon>
                   <InboxIcon />
                 </ListItemIcon>
-                <ListItemText primary='Posts' />
+                <ListItemText primary='Data' />
               </ListItemButton>
             </Link>
           </ListItem>
