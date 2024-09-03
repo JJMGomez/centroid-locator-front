@@ -81,6 +81,16 @@ export default function RootLayout({
               </ListItemButton>
             </Link>
           </ListItem>
+          <ListItem key='Shape' disablePadding>
+            <Link href='/shapes'>
+              <ListItemButton>
+                <ListItemIcon>
+                  <InboxIcon />
+                </ListItemIcon>
+                <ListItemText primary='Shape' />
+              </ListItemButton>
+            </Link>
+          </ListItem>
         </List>
       </Drawer>
       <Box
