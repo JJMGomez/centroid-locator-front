@@ -31,3 +31,8 @@ body {
     text-wrap: balance;
   }
 }
+
+.circle {
+  background-color: green;
+  border-radius: 50%;
+}
