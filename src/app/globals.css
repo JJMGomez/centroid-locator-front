@@ -33,6 +33,6 @@ body {
 }
 
 .circle {
-  background-color: green;
-  border-radius: 50%;
+  background-color: orangered;
+  border-radius: 60%;
 }
