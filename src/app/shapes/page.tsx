@@ -12,7 +12,7 @@ var current
 const App = () => {
   
   const sayHello = (event) => {
-    alert(event.target.id)
+    alert(event.currentTarget.id)
   };
 
   return (
