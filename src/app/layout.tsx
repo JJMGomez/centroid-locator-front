@@ -61,7 +61,7 @@ export default function RootLayout({
         <Toolbar />
         <Divider />
         <List>
-          <ListItem key='Home' disablePadding>
+          <ListItem key='主页面' disablePadding>
             <Link href='/'>
               <ListItemButton>
                 <ListItemIcon>
@@ -71,26 +71,47 @@ export default function RootLayout({
               </ListItemButton>
             </Link>
           </ListItem>
-          <ListItem key='Data' disablePadding>
-            <Link href='/data'>
+          <ListItem key='uploadcad' disablePadding>
+            <Link href='/uploadcad'>
               <ListItemButton>
                 <ListItemIcon>
                   <InboxIcon />
                 </ListItemIcon>
-                <ListItemText primary='Data' />
+                <ListItemText primary='上传CAD文件' />
               </ListItemButton>
             </Link>
           </ListItem>
-          <ListItem key='Shape' disablePadding>
-            <Link href='/shapes'>
+          <ListItem key='cadcamautomatic' disablePadding>
+            <Link href='/cadcamautomatic'>
               <ListItemButton>
                 <ListItemIcon>
                   <InboxIcon />
                 </ListItemIcon>
-                <ListItemText primary='Shape' />
+                <ListItemText primary='CAD/CAM操作' />
               </ListItemButton>
             </Link>
           </ListItem>
+          <ListItem key='manual' disablePadding>
+            <Link href='/manual'>
+              <ListItemButton>
+                <ListItemIcon>
+                  <InboxIcon />
+                </ListItemIcon>
+                <ListItemText primary='手动操作' />
+              </ListItemButton>
+            </Link>
+          </ListItem>
+          <ListItem key='weldingdata' disablePadding>
+            <Link href='/weldingdata'>
+              <ListItemButton>
+                <ListItemIcon>
+                  <InboxIcon />
+                </ListItemIcon>
+                <ListItemText primary='焊接参数' />
+              </ListItemButton>
+            </Link>
+          </ListItem>
+          
         </List>
       </Drawer>
       <Box

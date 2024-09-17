@@ -11,14 +11,14 @@ var current
 
 const App = () => {
   
-  const sayHello = (event) => {
-    alert(event.currentTarget.id)
+  const sayHello = (id) => {
+    alert(id)
   };
 
   return (
     <>
       {inputs.map((e)=>
-      <button onClick={sayHello} id={e.id}>
+      <button onClick={() => sayHello(e.id)} id={e.id}>
         <div className='circle'
         style={{width: e.Diameter, height: e.Diameter, position: 'relative', top: e.y, left: e.x}}
         />
