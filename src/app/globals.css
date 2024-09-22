@@ -35,4 +35,6 @@ body {
 .circle {
   background-color: orangered;
   border-radius: 60%;
+  height: 20px;
+  width: 20px;
 }

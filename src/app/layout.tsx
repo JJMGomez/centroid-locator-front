@@ -81,16 +81,6 @@ export default function RootLayout({
               </ListItemButton>
             </Link>
           </ListItem>
-          <ListItem key='cadcamautomatic' disablePadding>
-            <Link href='/cadcamautomatic'>
-              <ListItemButton>
-                <ListItemIcon>
-                  <InboxIcon />
-                </ListItemIcon>
-                <ListItemText primary='CAD/CAM操作' />
-              </ListItemButton>
-            </Link>
-          </ListItem>
           <ListItem key='manual' disablePadding>
             <Link href='/manual'>
               <ListItemButton>
