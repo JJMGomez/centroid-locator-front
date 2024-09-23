@@ -4,6 +4,9 @@ import { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 import DrawCircle from '../cadcamautomatic/DrawCircle';
 
 
@@ -19,14 +22,26 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+  ...theme.applyStyles('dark', {
+    backgroundColor: '#1A2027',
+  }),
+}));
+
 const App = () => {
     
   const [selectedFile, setSelectedFile] = useState(null);
   const [circleData, setCircleData] = useState('');
-
+  const [fileName, setFileName] = useState('');
   //选择了多个文件时，也只取第一个
   const selectedFileHandler = (event) => {
       setSelectedFile(event.target.files[0]);
+      setFileName(event.target.files[0].name);
   };
 
   const sendCircleData = (data) =>{
@@ -52,21 +67,46 @@ const App = () => {
 
 return (
   <>
-  <Button
+  <Box sx={{ flexGrow: 1 }}>
+      <Grid container spacing={2}>
+        <Grid item xs={8}>
+          <Button
+              component="label"
+              role={undefined}
+              variant="contained"
+              tabIndex={-1}
+              startIcon={<CloudUploadIcon />}
+              >
+              选择CAD文件
+              <VisuallyHiddenInput
+              type="file"
+              onChange={selectedFileHandler}
+              />
+          </Button>
+          <div>{fileName}</div>
+          <Button onClick={uploadfileHandler}>上传</Button>
+        </Grid>
+        <Grid item xs={8}>
+          <DrawCircle data={circleData}/>
+        </Grid>
+      </Grid>
+    </Box>
+  {/* <Button
     component="label"
     role={undefined}
     variant="contained"
     tabIndex={-1}
     startIcon={<CloudUploadIcon />}
   >
-    Upload files
+    选择CAD文件
     <VisuallyHiddenInput
       type="file"
       onChange={selectedFileHandler}
     />
   </Button>
-  <Button onClick={uploadfileHandler}>上传</Button>
-  <DrawCircle data={circleData}/>
+  <div>{fileName}</div>
+  <Button onClick={uploadfileHandler}>上传</Button> */}
+  
   </>
 );
 };
