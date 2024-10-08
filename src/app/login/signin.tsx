@@ -63,7 +63,6 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
   const [open, setOpen] = React.useState(false);
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -73,7 +72,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    // event.preventDefault();
+    event.preventDefault();
     if (usernameError || passwordError) {
       event.preventDefault();
       return;
@@ -88,7 +87,8 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
         if (data.data == null){
           alert(data.msg)
         }else{
-          alert("Welcome" + data.data.name)
+          alert("Welcome " + data.data.name);
+          window.location.href = '/';
         }     
       })
       .catch((err) => {
