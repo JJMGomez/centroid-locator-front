@@ -12,6 +12,9 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
+import { useFormState, useFormStatus } from 'react-dom'
+import { auth } from './auth';
+
 // import ForgotPassword from './ForgotPassword';
 // import { GoogleIcon, FacebookIcon, SitemarkIcon } from './CustomIcons';
 // import ColorModeSelect from '../shared-theme/ColorModeSelect';
@@ -63,6 +66,8 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
   const [open, setOpen] = React.useState(false);
+  const [errorMessage, dispatch] = useFormState(auth, undefined)
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -78,24 +83,6 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
       return;
     }
     const data = new FormData(event.currentTarget);
-    fetch("http://127.0.0.1:5000/user/login", {
-      method: "POST",
-      body: data,
-    })
-     .then((response) => response.json())
-     .then((data) => {
-        if (data.data == null){
-          alert(data.msg)
-        }else{
-          alert("Welcome " + data.data.name);
-          localStorage.setItem("username", data.data.username);
-          localStorage.setItem("name", data.data.name);
-          window.location.href = '/';
-        }     
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
   };
 
   const validateInputs = () => {
@@ -127,7 +114,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
     <>
       <CssBaseline enableColorScheme />
       <SignInContainer direction="column" justifyContent="space-between">
-       <Card variant="outlined">
+        <Card variant="outlined">
           <Typography
             component="h1"
             variant="h4"
@@ -218,6 +205,6 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
           </Box>
         </Card>
       </SignInContainer>
-      </>
+    </>
   );
 }

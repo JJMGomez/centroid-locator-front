@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
 import Paper from "@mui/material/Paper";
 import DrawCircle from "./DrawCircle";
-import { redirect } from 'next/navigation'
+
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
   clipPath: "inset(50%)",
@@ -32,10 +32,6 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function Upload() {
-  const username = localStorage.getItem('username');
-  if (username == null){
-    redirect('/login')
-  }
   const [selectedFile, setSelectedFile] = useState(null);
   const [circleData, setCircleData] = useState("");
   const [fileName, setFileName] = useState("");
@@ -51,7 +47,7 @@ export default function Upload() {
   const uploadFileHandler = () => {
     let form_data = new FormData();
     form_data.append("file", selectedFile);
-    fetch("http://127.0.0.1:5000/parse", {
+    fetch("http://127.0.0.1:8000/server/parse", {
       method: "POST",
       body: form_data,
       mode: "cors",
