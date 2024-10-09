@@ -88,6 +88,8 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
           alert(data.msg)
         }else{
           alert("Welcome " + data.data.name);
+          localStorage.setItem("username", data.data.username);
+          localStorage.setItem("name", data.data.name);
           window.location.href = '/';
         }     
       })

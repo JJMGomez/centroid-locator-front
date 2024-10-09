@@ -1,5 +1,10 @@
 "use client";
+import { redirect } from 'next/navigation'
 export default function Manual() {
+  const username = localStorage.getItem('username');
+  if (username == null){
+    redirect('/login')
+  }
   const inputs = [
     { x: 200.0000000000001, y: 177.9422863405994, Diameter: 20.0, id: "1" },
     { x: 145.0000000000001, y: 177.9422863405994, Diameter: 20.0, id: "2" },

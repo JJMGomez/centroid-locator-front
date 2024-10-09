@@ -69,7 +69,6 @@ export function ResponsiveDrawer(props: Props) {
       </List>
     </div>
   );
-
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
