@@ -1,14 +1,9 @@
-import * as React from 'react';
-import { useState, useEffect } from "react";
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import Paper from "@mui/material/Paper";
+import { useState, Fragment } from "react";
 import { styled } from "@mui/material/styles";
+import { Box, Drawer, Button, List, Divider, Paper } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-type Anchor =  'right';
+
+type Anchor = "right";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -33,7 +28,7 @@ const Item = styled(Paper)(({ theme }) => ({
   }),
 }));
 
-export default function TemporaryDrawer() {
+export default function UploadFileDrawer() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [circleData, setCircleData] = useState("");
   const [fileName, setFileName] = useState("");
@@ -42,7 +37,7 @@ export default function TemporaryDrawer() {
     setSelectedFile(event.target.files[0]);
     setFileName(event.target.files[0].name);
   };
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     top: false,
     left: false,
     bottom: false,
@@ -52,13 +47,13 @@ export default function TemporaryDrawer() {
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {
-    //   if (
-    //     event.type === 'keydown' &&
-    //     ((event as React.KeyboardEvent).key === 'Tab' ||
-    //       (event as React.KeyboardEvent).key === 'Shift')
-    //   ) {
-    //     return;
-    //   }
+      //   if (
+      //     event.type === 'keydown' &&
+      //     ((event as React.KeyboardEvent).key === 'Tab' ||
+      //       (event as React.KeyboardEvent).key === 'Shift')
+      //   ) {
+      //     return;
+      //   }
 
       setState({ ...state, [anchor]: open });
     };
@@ -72,24 +67,21 @@ export default function TemporaryDrawer() {
     >
       <List>
         <Button
-                component="label"
-                role={undefined}
-                variant="contained"
-                tabIndex={-1}
-                startIcon={<CloudUploadIcon />}
-              >
-                选择CAD文件
-                <VisuallyHiddenInput
-                  type="file"
-                  onChange={selectedFileHandler}
-                />
+          component="label"
+          role={undefined}
+          variant="contained"
+          tabIndex={-1}
+          startIcon={<CloudUploadIcon />}
+        >
+          选择CAD文件
+          <VisuallyHiddenInput type="file" onChange={selectedFileHandler} />
         </Button>
       </List>
       <Divider />
       {/* <List>
         {['All mail', 'Trash', 'Spam'].map((text, index) => (
           <ListItem button key={text}>
-            
+
           </ListItem>
         ))}
       </List> */}
@@ -98,8 +90,8 @@ export default function TemporaryDrawer() {
 
   return (
     <div>
-      {([ 'right'] as const).map((anchor) => (
-        <React.Fragment key={anchor}>
+      {(["right"] as const).map((anchor) => (
+        <Fragment key={anchor}>
           <Button onClick={toggleDrawer(anchor, true)}>上传CAD文件</Button>
           <Drawer
             anchor={anchor}
@@ -108,7 +100,7 @@ export default function TemporaryDrawer() {
           >
             {list(anchor)}
           </Drawer>
-        </React.Fragment>
+        </Fragment>
       ))}
     </div>
   );

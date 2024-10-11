@@ -1,7 +1,3 @@
-export default function Home() {
-  return (
-    <div className="App">
-
-    </div>
-  );
+export default function Page() {
+  return <div className="App"></div>;
 }

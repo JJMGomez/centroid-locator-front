@@ -1,31 +1,22 @@
-"use client";
-import * as React from "react";
-import { useState, useEffect } from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-let rows: any[] = [];
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from "@mui/material";
+import { weldingInfoUrl } from "@/app/lib/api";
 
-export default function Config() {
-  const [content, setContent] = useState([]);
-  useEffect(() => {
-    fetch("http://127.0.0.1:8000/weldingInfo", {
-      method: "GET",
-      mode: "cors",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setContent(data);
-        rows = data;
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-  }, []);
+interface Row {
+  name: string;
+  data: string;
+}
+
+export default async function Page() {
+  let data = await fetch(weldingInfoUrl);
+  let rows: Row[] = await data.json();
 
   return (
     <TableContainer component={Paper}>

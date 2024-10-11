@@ -1,7 +1,4 @@
-"use client"
-import SignIn from "./signin";
+import SignIn from "@/app/login/SignIn";
 export default function Login() {
-  return (
-    <SignIn />
-  );
+  return <SignIn />;
 }
