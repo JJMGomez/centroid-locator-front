@@ -7,7 +7,10 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
 import Paper from "@mui/material/Paper";
 import DrawCircle from "./DrawCircle";
-
+import FormLabel from '@mui/material/FormLabel';
+import FormControl from '@mui/material/FormControl';
+import TextField from '@mui/material/TextField';
+import TemporaryDrawer from './uploadFileDrawer';
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
   clipPath: "inset(50%)",
@@ -32,6 +35,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function Upload() {
+
   const [selectedFile, setSelectedFile] = useState(null);
   const [circleData, setCircleData] = useState("");
   const [fileName, setFileName] = useState("");
@@ -47,7 +51,7 @@ export default function Upload() {
   const uploadFileHandler = () => {
     let form_data = new FormData();
     form_data.append("file", selectedFile);
-    fetch("http://127.0.0.1:8000/server/parse", {
+    fetch("http://127.0.0.1:8000/parse", {
       method: "POST",
       body: form_data,
       mode: "cors",
@@ -67,10 +71,12 @@ export default function Upload() {
 
   return (
     <>
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={2}>
-          <Grid size={12}>
+      <TemporaryDrawer></TemporaryDrawer>
+      {/* <Box sx={{ flexGrow: 1 }}>
+        <Grid container spacing={4}>
+          <Grid size={20}>
             <Item>
+
               <Button
                 component="label"
                 role={undefined}
@@ -84,19 +90,21 @@ export default function Upload() {
                   onChange={selectedFileHandler}
                 />
               </Button>
-              <div>{fileName}</div>
-              <Button variant="outlined" onClick={uploadFileHandler}>
-                上传
-              </Button>
+              <div>当前文件：{fileName}</div>
+
             </Item>
           </Grid>
+
           <Grid size={12}>
+            <Button variant="outlined" onClick={uploadFileHandler}>
+                上传
+              </Button>
             <Item>
               <DrawCircle data={circleData} />
             </Item>
           </Grid>
         </Grid>
-      </Box>
+      </Box> */}
     </>
   );
 }

@@ -12,13 +12,10 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
-import { useFormState, useFormStatus } from 'react-dom'
-import { auth } from './auth';
-
+import { setCookie } from '@/lib';
 // import ForgotPassword from './ForgotPassword';
 // import { GoogleIcon, FacebookIcon, SitemarkIcon } from './CustomIcons';
 // import ColorModeSelect from '../shared-theme/ColorModeSelect';
-
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
@@ -82,7 +79,25 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
       event.preventDefault();
       return;
     }
+
     const data = new FormData(event.currentTarget);
+    fetch("http://127.0.0.1:8000/user/login", {
+      method: "POST",
+      body: data,
+    })
+     .then((response) => response.json())
+     .then((data) => {
+        if (data.data == null){
+          alert(data.msg)
+        }else{
+          alert("Welcome " + data.data.name);
+          setCookie(data.data.username);
+          window.location.href = '/';
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   };
 
   const validateInputs = () => {

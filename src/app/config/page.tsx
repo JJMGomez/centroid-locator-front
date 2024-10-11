@@ -13,7 +13,7 @@ let rows: any[] = [];
 export default function Config() {
   const [content, setContent] = useState([]);
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/server/weldingInfo", {
+    fetch("http://127.0.0.1:8000/weldingInfo", {
       method: "GET",
       mode: "cors",
     })
