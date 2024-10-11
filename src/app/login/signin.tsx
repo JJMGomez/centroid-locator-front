@@ -12,10 +12,10 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
+import { setCookie } from '@/lib';
 // import ForgotPassword from './ForgotPassword';
 // import { GoogleIcon, FacebookIcon, SitemarkIcon } from './CustomIcons';
 // import ColorModeSelect from '../shared-theme/ColorModeSelect';
-
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
@@ -77,8 +77,9 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
       event.preventDefault();
       return;
     }
+    
     const data = new FormData(event.currentTarget);
-    fetch("http://127.0.0.1:5000/user/login", {
+    fetch("http://127.0.0.1:8000/user/login", {
       method: "POST",
       body: data,
     })
@@ -88,8 +89,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
           alert(data.msg)
         }else{
           alert("Welcome " + data.data.name);
-          localStorage.setItem("username", data.data.username);
-          localStorage.setItem("name", data.data.name);
+          setCookie(data.data.username);
           window.location.href = '/';
         }     
       })
