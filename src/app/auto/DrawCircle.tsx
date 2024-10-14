@@ -1,5 +1,4 @@
 "use client";
-
 const diameter = 20.0;
 
 export default function DrawCircle({ data }) {

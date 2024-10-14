@@ -1,16 +1,19 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { styled } from "@mui/material/styles";
-import Button from "@mui/material/Button";
+import {
+  Button,
+  Box,
+  Grid2 as Grid,
+  Paper,
+  FormLabel,
+  FormControl,
+  TextField,
+} from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid2";
-import Paper from "@mui/material/Paper";
-import DrawCircle from "./DrawCircle";
-import FormLabel from '@mui/material/FormLabel';
-import FormControl from '@mui/material/FormControl';
-import TextField from '@mui/material/TextField';
-import TemporaryDrawer from './uploadFileDrawer';
+import DrawCircle from "@/app/auto/DrawCircle";
+import UploadFileDrawer from "@/app/auto/UploadFileDrawer";
+
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
   clipPath: "inset(50%)",
@@ -35,7 +38,6 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function Upload() {
- 
   const [selectedFile, setSelectedFile] = useState(null);
   const [circleData, setCircleData] = useState("");
   const [fileName, setFileName] = useState("");
@@ -71,12 +73,11 @@ export default function Upload() {
 
   return (
     <>
-      <TemporaryDrawer></TemporaryDrawer>
+      <UploadFileDrawer />
       {/* <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={4}>
           <Grid size={20}>
             <Item>
-              
               <Button
                 component="label"
                 role={undefined}
@@ -91,17 +92,16 @@ export default function Upload() {
                 />
               </Button>
               <div>当前文件：{fileName}</div>
-              
             </Item>
           </Grid>
 
           <Grid size={12}>
             <Button variant="outlined" onClick={uploadFileHandler}>
-                上传
-              </Button>
+              上传
+            </Button>
             <Item>
               <DrawCircle data={circleData} />
-            </Item> 
+            </Item>
           </Grid>
         </Grid>
       </Box> */}
