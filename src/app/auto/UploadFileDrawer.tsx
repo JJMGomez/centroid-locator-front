@@ -1,8 +1,10 @@
 import { useState, Fragment } from "react";
 import { styled } from "@mui/material/styles";
-import { Box, Drawer, Button, List, Divider, Paper } from "@mui/material";
+import { Box, Drawer, Button, List, Divider, Paper, TextField, FormControl, FormLabel } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-
+import { uploadCAD } from "../lib/cadAPI";
+import { useFormState } from "react-dom";
+import { redirect } from "next/navigation";
 type Anchor = "right";
 
 const VisuallyHiddenInput = styled("input")({
@@ -32,61 +34,107 @@ export default function UploadFileDrawer() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [circleData, setCircleData] = useState("");
   const [fileName, setFileName] = useState("");
+  const [description, setDescription] = useState("");
+  const [uploadCADMessage, uploadCADFile] = useFormState(uploadCAD, [-1, undefined]);
+  const [fileError, setFileError] = useState(false);
+  const [fileErrorMessage, setFileErrorMessage] = useState("");
   //选择了多个文件时，也只取第一个
   const selectedFileHandler = (event) => {
     setSelectedFile(event.target.files[0]);
     setFileName(event.target.files[0].name);
   };
+
+  const descriptionHandler = (event) => {
+    setDescription(event.target.value);
+  };
+
+  const handleSubmit = (event) =>{
+    event.preventDefault();
+    setState({right: false});
+  };
+
+  const closeDrawerHandler = (event) =>{
+    setState({right: false})
+  };
+
   const [state, setState] = useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
+    right: false
   });
+
+  //TODO
+  const validateInputs = () => {
+    setFileError(false);
+    setFileErrorMessage("");
+  }
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {
-      //   if (
-      //     event.type === 'keydown' &&
-      //     ((event as React.KeyboardEvent).key === 'Tab' ||
-      //       (event as React.KeyboardEvent).key === 'Shift')
-      //   ) {
-      //     return;
-      //   }
+        if (
+          event.type === 'keydown' &&
+          ((event as React.KeyboardEvent).key === 'Tab' ||
+            (event as React.KeyboardEvent).key === 'Shift')
+        ) {
+          return;
+        }
 
       setState({ ...state, [anchor]: open });
     };
 
   const list = (anchor: Anchor) => (
     <Box
+      component="form"
       sx={{ width: 500 }}
       role="presentation"
-      onClick={toggleDrawer(anchor, true)}
-      onKeyDown={toggleDrawer(anchor, true)}
+      action={uploadCADFile}
     >
       <List>
+        <FormControl>
+          <FormLabel htmlFor="raised-button-file">CAD文件</FormLabel>
+            <Button
+              component="label"
+              role={undefined}
+              variant="contained"
+              tabIndex={-1}
+              startIcon={<CloudUploadIcon />}
+            >
+              选择CAD文件
+              <VisuallyHiddenInput id="file" name="file" type="file" onChange={selectedFileHandler} />
+            </Button>
+        </FormControl>
+        {/* <div>文件名：{selectedFile}</div> */}
+        <Divider />  
+        <FormControl>
+          <FormLabel htmlFor="description">简介: </FormLabel> 
+            <TextField
+              id="description"
+              name="description"
+              placeholder="请输入简介"
+              multiline
+              onChange={descriptionHandler}
+          />
+        </FormControl>
         <Button
-          component="label"
-          role={undefined}
-          variant="contained"
-          tabIndex={-1}
-          startIcon={<CloudUploadIcon />}
-        >
-          选择CAD文件
-          <VisuallyHiddenInput type="file" onChange={selectedFileHandler} />
+              type="submit"
+              fullWidth
+              variant="contained"
+              onClick={validateInputs}
+            >
+              提交
         </Button>
       </List>
-      <Divider />
-      {/* <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-
-          </ListItem>
-        ))}
-      </List> */}
+      <Button
+              fullWidth
+              onClick={toggleDrawer(anchor, false)}
+            >
+              取消
+      </Button>
     </Box>
   );
+
+  if (uploadCADMessage[0] == 0){
+    redirect("/auto");
+  }
 
   return (
     <div>
@@ -96,7 +144,7 @@ export default function UploadFileDrawer() {
           <Drawer
             anchor={anchor}
             open={state[anchor]}
-            onClose={toggleDrawer(anchor, true)}
+            onClose={toggleDrawer(anchor, false)}
           >
             {list(anchor)}
           </Drawer>
