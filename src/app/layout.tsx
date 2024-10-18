@@ -4,6 +4,7 @@ import "@/app/ui/globals.css";
 import { geistSans, geistMono } from "@/app/ui/fonts";
 import { ResponsiveDrawer, Menu } from "@/app/menu";
 
+
 export const metadata: Metadata = {
   title: "Centroid Locator",
   description: "Centroid Locator",

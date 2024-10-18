@@ -1,10 +1,11 @@
-import { useState, Fragment } from "react";
+import { useState, Fragment, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import { Box, Drawer, Button, List, Divider, Paper, TextField, FormControl, FormLabel } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { uploadCAD } from "../lib/cadAPI";
 import { useFormState } from "react-dom";
-import { redirect } from "next/navigation";
+import { toast, Toaster } from 'react-hot-toast';
+
 type Anchor = "right";
 
 const VisuallyHiddenInput = styled("input")({
@@ -48,24 +49,31 @@ export default function UploadFileDrawer() {
     setDescription(event.target.value);
   };
 
-  const handleSubmit = (event) =>{
-    event.preventDefault();
-    setState({right: false});
-  };
-
-  const closeDrawerHandler = (event) =>{
-    setState({right: false})
-  };
-
   const [state, setState] = useState({
     right: false
   });
 
-  //TODO
-  const validateInputs = () => {
+  //TODO 文件校验
+  const handleFormSubmit = () => {
     setFileError(false);
     setFileErrorMessage("");
+    // if(uploadCADMessage[1]){
+    //   toast.success("上传成功")
+    // }else{
+    //   toast.error("上传失败")
+    // }
   }
+
+  useEffect(() => {
+  if (uploadCADMessage[0] == 0){
+    toast.success(uploadCADMessage[1])
+    setState({right: false})
+  }
+  if (uploadCADMessage[0] == 1){
+    toast.error(uploadCADMessage[1])
+  }
+  },[uploadCADMessage]
+  )
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
@@ -118,26 +126,23 @@ export default function UploadFileDrawer() {
               type="submit"
               fullWidth
               variant="contained"
-              onClick={validateInputs}
+              onClick={handleFormSubmit}
             >
               提交
         </Button>
       </List>
       <Button
-              fullWidth
-              onClick={toggleDrawer(anchor, false)}
-            >
-              取消
+        fullWidth
+        onClick={toggleDrawer(anchor, false)}
+        >
+        取消
       </Button>
     </Box>
   );
 
-  if (uploadCADMessage[0] == 0){
-    redirect("/auto");
-  }
-
   return (
     <div>
+      <Toaster />
       {(["right"] as const).map((anchor) => (
         <Fragment key={anchor}>
           <Button onClick={toggleDrawer(anchor, true)}>上传CAD文件</Button>
